@@ -110,14 +110,3 @@ One of the most widely used tools for this attack is **Evilginx**, which enables
   - MFA success followed by anomalous behavior
 
 ---
-
-## Detection Techniques
-
-### Microsoft Sentinel / Defender XDR
-
-#### 1. Detect Impossible Travel
-```kql
-SigninLogs
-| where ResultType == 0
-| summarize Locations = make_set(Location), IPs = make_set(IPAddress) by UserPrincipalName, bin(TimeGenerated, 1h)
-| where array_length(Locations) > 1
